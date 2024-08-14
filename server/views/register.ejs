@@ -1,0 +1,24 @@
+<h1> Register </h1>
+<!--post to the /register route -->
+<form action = "/register" method = "POST"> 
+    <!--create Name, Email, and Password inputs-->
+    <div>
+        <label for = "firstname">Firstname</label>
+        <input type ="text" id= "firstname" name="firstname" required>
+    </div>
+    <div>
+        <label for = "lastname">Lastname</label>
+        <input type ="text" id= "lastname" name="lastname" required>
+    </div>
+    <div>
+        <label for = "email">Email</label>
+        <input type ="text" id= "email" name="email" required>
+    </div>
+    <div>
+        <label for = "password">Password</label>
+        <input type ="text" id= "password" name="password" required>
+    </div>
+    <button type = "submit">Register</button>
+</form>
+<!--navigate to login page-->
+<a href="/login">Login</a>
