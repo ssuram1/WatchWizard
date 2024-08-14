@@ -1,0 +1,73 @@
+//styles swiper-slide class/div
+.swiper-slide {
+    //smooth transition for changing properties
+    transition: all 300ms ease-in-out;
+    border-radius: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    width: 200px;
+  }
+//styles desc class with movie description/details
+.desc {
+  //transitions for changing properties
+  transition: all 300ms ease-in-out;
+  background-color: #181818c4;
+  height: 170px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+//when hover, apply same transition
+.desc:hover {
+  transition: all 300ms ease-in-out;
+}
+
+.desc.tv {
+  height: 60px;
+}
+//style images in swiper-slide class
+.swiper-slide img {
+  border-radius: 5px;
+  cursor: pointer;
+  width: 400px !important;
+  height: 400px !important;
+  object-fit: cover;
+}
+//change cursor to grabbing hand to show clickable
+.swiper-slide img:active {
+  cursor: grabbing;
+}
+//when elements in swiper-slide are hovered
+.swiper-slide:hover {
+  //transforms image to be 1.5 times larger
+  transform: scale(1.5);
+  transition: all 300ms ease-in-out;
+  transition-delay: 300ms;
+  //bring hovered slide to front
+  z-index: 1;
+}
+//when image of swiper-slide is hovered
+.swiper-slide:hover img {
+  transition-delay: 300ms;
+  //create shadow around hovered content
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+}
+//adjust styling to screen size
+@media screen and (max-width: 599px) {
+  //limit image width for smaller screens
+  .swiper-slide img {
+    max-width: 14rem;
+  }
+  //hide navigation on smaller screens
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+}
+//further reduce image width when small screen
+@media screen and (max-width: 400px) {
+  .swiper-slide img {
+    max-width: 10.5rem;
+    border-radius: 2px;
+  }
+}

@@ -1,0 +1,16 @@
+<!-- component to display banner and trailer of top content -->
+<iframe class= "w-screen" [src]= "videoURL" frameborder="0"></iframe>
+
+<div class="h-screen bg-white">
+    <div class="pt-[20%] px-24 h-full absolute text-white bg-gradient-to-r from-black">
+        <!--CHANGE-make dynamic based on first movie displayed-->
+        <h1 class="text-6xl font-bold">{{ bannerTitle }}</h1>
+            <!--CHANGE-make dynamic based on first movie displayed-->
+            <p class="inline-block py-6 text-xl w-1/4 flex-wrap">{{ bannerOverview }}</p>
+    <div>
+        <button (click)="goToDetails(this.contentID)" class="bg-white text-black px-12 py-4 text-xl rounded-lg hover:bg-opacity-70 transition-[1s]">
+            More Info
+        </button>
+    </div>  
+    </div>  
+</div>

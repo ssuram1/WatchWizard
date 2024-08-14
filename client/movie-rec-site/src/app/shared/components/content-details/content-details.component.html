@@ -1,0 +1,29 @@
+<div *ngIf="content" class="container h-screen w-screen mx-auto mt-5">
+    <div class="flex p-5">
+      <!-- Image Column -->
+      <div class="w-1/3 mt-20 flex items-center justify-center">
+        <img [src]="content.poster" alt="{{content.title}} Poster" class="w-3/4 h-[400px] object-cover" style="max-width: auto; height: auto;" />
+      </div>
+      <!-- Text Column -->
+      <div class="w-2/3 flex flex-col justify-center ml-5">
+        <h1 class="mt-2 mb-2 text-5xl font-semibold">{{ content.title }}</h1>
+        <p class="mt-2 mb-2 text-lg">{{ content.plot_overview }}</p>
+        <a [href]="content.trailer" class="mt-4 w-20 inline-block px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition-colors duration-300">
+            Watch Trailer
+        </a>
+        <!--List of Streaming Services with links-->
+        <h2 class="text-2xl font-bold mb-2 mt-7 underline">Streaming Services</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          <ng-container *ngIf="sources && sources.length > 0 && sources[0].sourceName">
+            <ng-container *ngFor="let source of sources">
+                  <!--add each source as list item-->
+                  <li>
+                    <a href="{{source.sourceURL}}" target="_blank" rel="noopener noreferrer" class="text-lg font-bold text-blue-500 hover:underline">{{source.sourceName}}</a>
+                  </li>
+            </ng-container>
+          </ng-container>
+      </ul>
+      </div>
+    </div>
+  </div>
+  

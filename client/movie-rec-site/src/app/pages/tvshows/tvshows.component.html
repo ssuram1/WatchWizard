@@ -1,0 +1,35 @@
+<!--custom Angular element with header selector-->
+<app-header></app-header>
+
+<!-- banner component -->
+<ng-container *ngIf="(bannerDetail$ | async)?.length > 0">
+    <app-banner [bannerTitle] = "(bannerDetail$ | async)[0]?.title" [bannerOverview] = "(bannerDetail$ | async)[0]?.plot_overview" [bannerURL] = "bannerURL" [contentID] = "(bannerDetail$ | async)[0]?.contentID"></app-banner>
+</ng-container>
+
+<!--movie carousel component assigning movies array to videoContent-->
+<main class="overflow-x-auto hide-scrollbar">
+    <!--comedy carousel-->
+    <app-tvshow-carousel [videoContents] = "comedyTvshows" [title]="'Comedy TV Shows'"></app-tvshow-carousel>
+</main>
+<main class="overflow-x-auto hide-scrollbar">
+    <!--drama carousel-->
+    <app-tvshow-carousel [videoContents] = "dramaTvshows" [title]="'Drama TV Shows'"></app-tvshow-carousel>
+</main>
+<!-- <main class="overflow-x-auto hide-scrollbar"> -->
+        <!--action carousel-->
+        <!-- <app-tvshow-carousel [videoContents] = "actionTvshows" [title]="'Action TV Shows'"></app-tvshow-carousel> -->
+<!-- </main> -->
+<main class="overflow-x-auto hide-scrollbar">
+    <!--crime carousel-->
+    <app-tvshow-carousel [videoContents] = "crimeTvshows" [title]="'Crime TV Shows'"></app-tvshow-carousel>
+</main>
+<main class="overflow-x-auto hide-scrollbar">
+    <!--romance carousel-->
+    <app-tvshow-carousel [videoContents] = "realityTvshows" [title]="'Reality TV Shows'"></app-tvshow-carousel>
+</main>
+<footer class="flex justify-center items-center mt-auto py-4">
+    <p>
+        Streaming data powered by 
+        <a href="https://www.watchmode.com/" target="_blank" rel="noopener noreferrer" class="ml-2 text-blue-500 hover:underline">Watchmode.com</a>
+    </p>    
+</footer>

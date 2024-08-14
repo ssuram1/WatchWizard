@@ -1,0 +1,25 @@
+<!--header with background color and sticky at top-->
+<header class= "h-[68px] z-10 dark-nav sticky top-0 flex items-center justify-between px-10">
+<!-- Logo + navigation items-->
+ <div class="flex gap-10">
+    <img width= "130" src="assets/WatchWizardLogo.png" alt="logo">
+    <!--list pages on header/navbar-->
+    <ul class="flex-row items-center" *ngFor="let item of navList">
+        <li class="py-12 listcolors cursor-pointer text-xl font-medium list-item transition-[1s]">
+         <a [routerLink]= "item.link">{{item.name}}</a>
+        </li>
+    </ul>
+ </div>
+ <!--welcome user, user profile picture, and signout-->
+ <div class = "listcolors flex items-center justify-between gap-4">
+    <div class = "flex items-center gap-2">
+         <!--add welcome name-->
+        <a href="/"><span>Welcome <strong>{{name}}</strong></span></a>
+        <!--profile image-->
+        <img [src]="profilePicture" class= "rounded-full w-13 h-12" alt="Profile Image">
+    </div>
+    &nbsp; | &nbsp;
+    <!--add hyperlink to sign out-->
+    <a href="/" class="text-lg cursor-pointer">Sign out</a>
+ </div>
+</header>

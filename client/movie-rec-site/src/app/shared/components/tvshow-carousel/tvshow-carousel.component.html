@@ -1,0 +1,42 @@
+<!--use container to wrap and center carousels-->
+<div class="container px-20 mt-14 mb-20">
+    <!--title for each carousel-->
+    <p class="font-semibold text-2xl my-3 ml-3">{{title}}</p>
+    <!--container for Swiper carousel with template reference swiperContainer-->
+    <div #swiperContainer class="swiper-container w-full">
+        <!--contains slides that Swiper needs to scroll through-->
+        <div class="swiper-wrapper">
+            <!--loop through body for each item of list-->
+            <ng-container *ngFor="let movie of videoContents">
+                <!--identify slides wihin carousel-->
+                <!--if user's mouse enters, set movie to hover and show movie details-->
+                <div 
+                (mouseenter) = "setHoverMovie(movie)" 
+                (mouseleave)= "clearHoverMovie()" 
+                (click) = "goToDetails(movie)"
+                class="swiper-slide">
+                <!--display movie poster-->
+                <img src="{{movie.poster}}" alt="{{movie.title}} Poster" class="w-[150px] h-[10px] object-cover my-auto" />
+                <!--movie details-->
+                <!--if user is hovering over movie, then display movie details-->
+                <div @fade *ngIf= "movie.title === this.selectedContent" class="desc p-2">
+                    <!--title-->
+                    <span class="text-base flex flex-wrap font-bold">{{movie.title}}</span>
+                    <!--plot overview-->
+                    <p class="text-xs my-3">{{ movie.plot_overview | description: 170 }}</p>
+                    <!--holds other info such as user rating and more info icon-->
+                    <div class="py-3 absolute w-[90%] bottom-1">
+                        <!--user to display user rating-->
+                        <p class="text-xs flex justify-between items-center">
+                            <span class="text-white">Rating: {{movie.user_rating}}</span>
+                            <!--icon for more info-->
+                            <i class="fa fa-2x fa-chevron-circle-down" aria-hidden="true"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+    </div>
+    </div>
+    
