@@ -1,5 +1,6 @@
-
-
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 //import express
 const express = require('express');
 //import axios
@@ -19,6 +20,7 @@ const cors = require('cors');
 //import method-override
 const methodOverride = require('method-override')
 
+
 //create instance of express application
 const app = express()
 //server is on port 3000
@@ -28,6 +30,112 @@ const apiKey = 'JpBbPVPOSNMKtcetkkLkw3ATm4MMNj55jNT1ZMFV'
 //use CORS to allow all origins
 app.use(cors());
 
+//use express.json middleware
+app.use(express.json());
+//middleware setup
+app.set('view engine', 'ejs')
+//access registration details in req
+app.use(express.urlencoded({extended:false}))
+//use for flashing messages
+app.use(flash())
+//use to track user sessions
+app.use(session ({
+    //secret key
+    secret: process.env.SESSION_SECRET,
+    //no resave if no change
+    resave: false, 
+    //no saving empty values
+    saveUnitialized: false
+}))
+//initializes passport
+app.use(passport.initialize())
+//store variables to persist across whole user session
+app.use(passport.session())
+//import to override POST method and use delete method
+app.use(methodOverride('_method'))
+
+
+//route to render registration page
+app.get("/register",checkNotAuthenticated , (req, res) => {
+    res.render('register.ejs')
+})
+//when POST request to /register endpoint, add to DB
+//async function ensures that await until password is hashed
+app.post('/register', checkNotAuthenticated, async (req, res) => {
+    try {
+        //ensure password is hashed
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        //add user object to array--CHANGE to add to DB
+        users.push({
+            id: Date.now().toString(),
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            password: hashedPassword
+        });
+        //express.js method to redirect client to login page
+        res.redirect('/login');
+    }
+    catch {
+        res.redirect('/register');
+    }
+    console.log(users);
+})
+
+//use to log out of sesion
+app.delete('/logout', (req, res) => {
+    //passport method to clear session and log user out
+    req.logout((err) => {
+        if(err) {
+            return next(err)
+        }
+        res.redirect('/login')
+    });
+});
+
+//route to render login page
+app.get("/login", checkNotAuthenticated, (req, res) => {
+    res.render('login.ejs')
+});
+//when POST request to /login endpoint, use passport authentication middleware
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/home',
+    failureRedirect: '/login',
+    failureFlash: true
+}
+));
+
+//middleware function to ensure user authentication prior to access
+function checkAuthenticated(req, res, next) {
+    //checks for authentication
+    if (req.isAuthenticated()) {
+        return next()
+    }
+    //if not authenticated, redirect to login page
+    return res.redirect('/login')
+}
+
+//middleware function to ensure no access to login/registration if already authenticated
+function checkNotAuthenticated(req, res, next) {
+    //checks if authenticated and redirect to home page
+    if (req.isAuthenticated()) {
+        return res.redirect('/home')
+    }
+    //if not authenticated, continue
+    next()
+}
+
+
+//static file serving configuration
+app.use(express.static('public')); 
+
+
+//req is HTTP request, res is HTTP response- temp
+app.get("/home", checkAuthenticated, (req, res) => {
+    //personalize message to authenticated user
+    //for future after creating angular page, change to res.render('filename', {name: req.user.firstname})
+    res.render('index.ejs')
+})
 
 
 //use express.json middleware
